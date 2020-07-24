@@ -1,0 +1,6 @@
+- 1 action trong StoreCenter chỉ thay đổi bằng cách trigger 1 action
+- ActionCreator bắt buộc phải trả về một object
+- Reducer không được trả về Undefined do khi khởi tạo App tất cả các reducer sẽ được gọi với một action không xác định, do vậy tham số đầu tiên không được = undefine.
+- Sau lần đầu tiên được gọi thì tham số đầu tiên được truyền vào undefine chính là giá trị trả về ở lần cuối cùng mà reducer được gọi.
+- Giá trị trả về của Reducer nên được tạo ra từ 2 giá trị đầu vào, không đi ra "ngoài" (ví dụ như call axios để lấy dữ liệu) đây là cách tiếp cận xấu.
+- Reducer nên là pure function và chúng ta không nên mute state.
