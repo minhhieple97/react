@@ -1,15 +1,45 @@
 import React, { Component } from "react"
 import classes from "./App.css"
 import Persons from "../components/Persons/Persons"
+import Cockpit from "../components/Cockpit/Cockpit"
 class App extends Component {
-  state = {
-    persons: [
-      { id: "asfa1", name: "Max", age: 28 },
-      { id: "vasdf1", name: "Manu", age: 29 },
-      { id: "asdf11", name: "Stephanie", age: 26 },
-    ],
-    otherState: "some other value",
-    showPersons: false,
+  constructor(props) {
+    super(props)
+    this.state = {
+      persons: [
+        { id: "asfa1", name: "Max", age: 28 },
+        { id: "vasdf1", name: "Manu", age: 29 },
+        { id: "asdf11", name: "Stephanie", age: 26 },
+      ],
+      otherState: "some other value",
+      showPersons: true,
+    }
+    console.log("[App.js] constructor")
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log("[App.js] shouldComponentUpdate ==================")
+  //   return true
+  // }
+
+  // static getDerivedStateFromProps(props, state) {
+  //   console.log("[App.js] getDerivedStateFromProps", props, state)
+  //   return state
+  // }
+
+  // componentDidMount() {
+  //   console.log("[App.js] componentDidMount ==================")
+  // }
+
+  // getSnapshotBeforeUpdate = (prevProps, prevState) => {
+  //   console.log("[App.js] getSnapshotBeforeUpdate", prevState)
+  //   return { message: "Snapshot!" }
+  // }
+
+  componentDidUpdate(prevProps, prevState, snapShort) {
+    console.log("[App.js] componentDidUpdate", prevState)
+    console.log("[App.js] componentDidUpdate snapShort", snapShort)
+    console.log("[App.js] componentDidUpdate ==================")
   }
 
   nameChangedHandler = (event, id) => {
@@ -32,7 +62,10 @@ class App extends Component {
   deletePersonHandler = (personIndex) => {
     const persons = [...this.state.persons]
     persons.splice(personIndex, 1)
-    this.setState({ persons: persons })
+    this.setState({ persons: persons }, () => {
+      console.log("[App.js] state realy change")
+    })
+    console.log("[App.js] deletePersonHandler", this.state)
   }
 
   togglePersonsHandler = () => {
@@ -41,21 +74,17 @@ class App extends Component {
   }
 
   render() {
+    console.log("[App.js] render", this.state)
     let persons = null
-    let btnClass = ""
 
     if (this.state.showPersons) {
       persons = (
-        <div>
-          <Persons
-            persons={this.state.persons}
-            deletePersonHandler={this.deletePersonHandler}
-            nameChangedHandler={this.nameChangedHandler}
-          ></Persons>
-        </div>
+        <Persons
+          persons={this.state.persons}
+          deletePersonHandler={this.deletePersonHandler}
+          nameChangedHandler={this.nameChangedHandler}
+        />
       )
-
-      btnClass = classes.Red
     }
 
     const assignedClasses = []
@@ -65,14 +94,13 @@ class App extends Component {
     if (this.state.persons.length <= 1) {
       assignedClasses.push(classes.bold) // classes = ['red', 'bold']
     }
-
     return (
       <div className={classes.App}>
-        <h1>Hi, I'm a React App</h1>
-        <p className={assignedClasses.join(" ")}>This is really working!</p>
-        <button className={btnClass} onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
+        <Cockpit
+          persons={this.state.persons}
+          togglePersonsHandler={this.togglePersonsHandler}
+          showPersons={this.state.showPersons}
+        />
         {persons}
       </div>
     )
