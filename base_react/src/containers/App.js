@@ -13,6 +13,7 @@ class App extends Component {
       ],
       otherState: "some other value",
       showPersons: true,
+      showCockpit: true,
     }
     console.log("[App.js] constructor")
   }
@@ -38,8 +39,8 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState, snapShort) {
     console.log("[App.js] componentDidUpdate", prevState)
-    console.log("[App.js] componentDidUpdate snapShort", snapShort)
-    console.log("[App.js] componentDidUpdate ==================")
+    // console.log("[App.js] componentDidUpdate snapShort", snapShort)
+    // console.log("[App.js] componentDidUpdate ==================")
   }
 
   nameChangedHandler = (event, id) => {
@@ -96,11 +97,20 @@ class App extends Component {
     }
     return (
       <div className={classes.App}>
-        <Cockpit
-          persons={this.state.persons}
-          togglePersonsHandler={this.togglePersonsHandler}
-          showPersons={this.state.showPersons}
-        />
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: !this.state.showCockpit })
+          }}
+        >
+          SHOW COCKPIT
+        </button>
+        {this.state.showCockpit && (
+          <Cockpit
+            personsLength={this.state.persons.length}
+            togglePersonsHandler={this.togglePersonsHandler}
+            showPersons={this.state.showPersons}
+          />
+        )}
         {persons}
       </div>
     )

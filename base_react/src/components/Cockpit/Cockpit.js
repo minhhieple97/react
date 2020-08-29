@@ -1,22 +1,32 @@
 import React, { useEffect } from "react"
 import classes from "./Cockpit.css"
-export default function Cockpit({
-  persons,
-  togglePersonsHandler,
-  showPersons,
-}) {
+function Cockpit({ personsLength, togglePersonsHandler, showPersons }) {
   useEffect(() => {
-    console.log("[Cockpit] useEffect")
+    console.log("[Cockpit.js] 1nd useEffect")
+    // const timeout = setTimeout(() => {
+    //   alert("settimeout in useEffect.")
+    // }, 2000)
+    return () => {
+      // clearTimeout(timeout)
+      console.log("[Cockpit.js] 1nd clean up.")
+    }
   })
+
+  // useEffect(() => {
+  //   console.log("[Cockpit.js] 2nd useEffect")
+  //   return () => {
+  //     console.log("[Cockpit.js] clean work in 2nd.")
+  //   }
+  // })
   const assignedClasses = []
   let btnClass = ""
   if (showPersons) {
     btnClass = classes.red
   }
-  if (persons.length <= 2) {
+  if (personsLength <= 2) {
     assignedClasses.push(classes.red) // classes = ['red']
   }
-  if (persons.length <= 1) {
+  if (personsLength <= 1) {
     assignedClasses.push(classes.bold) // classes = ['red', 'bold']
   }
   return (
@@ -29,3 +39,5 @@ export default function Cockpit({
     </div>
   )
 }
+// export default React.memo(Cockpit)
+export default Cockpit

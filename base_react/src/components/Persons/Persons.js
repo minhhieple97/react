@@ -19,10 +19,13 @@ export default class Persons extends Component {
   //   return state
   // }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log("[Persons.js] shouldComponentUpdate")
-  //   return true
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[Persons.js] shouldComponentUpdate")
+    if (nextProps.persons !== this.props.persons) {
+      return true
+    }
+    return false
+  }
   // getSnapshotBeforeUpdate = (prevProps, prevState) => {
   //   console.log("[Persons.js] getSnapshotBeforeUpdate")
   //   return null
@@ -32,6 +35,9 @@ export default class Persons extends Component {
   //   console.log("[Persons.js] componentDidUpdate")
   //   console.log("[Persons.js] componentDidUpdate ==================")
   // }
+  componentWillUnmount() {
+    console.log("[Persons.js] componentWillUnmount")
+  }
 
   render() {
     console.log("[Persons.js] render")
